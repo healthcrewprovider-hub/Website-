@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { 
   HeartPulse, UserRound, Users, Stethoscope, 
-  MapPin, CheckCircle, ChevronRight, Copy, Mail, ShieldCheck, Award, Phone
+  MapPin, CheckCircle, ChevronRight, Copy, Mail, ShieldCheck, Award
 } from "lucide-react"
 
 import Navbar from "@/components/Navbar"
@@ -32,7 +32,7 @@ import {
 const formSchema = z.object({
   fullName: z.string().min(2, "Full name is required"),
   email: z.string().email("Valid email address is required"),
-  phone: z.string().min(10, "Valid phone number is required"),
+  phone: z.string().optional(),
   position: z.string().min(1, "Please select a position"),
   province: z.string().min(1, "Please select a province"),
   experience: z.string().min(1, "Please specify your experience"),
@@ -129,18 +129,20 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="max-w-3xl"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 border border-accent/30 text-accent-foreground backdrop-blur-sm mb-6 shadow-sm">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 border border-accent/40 backdrop-blur-sm mb-6 shadow-md">
                 <HeartPulse className="w-4 h-4 text-accent" />
-                <span className="text-sm font-semibold tracking-wide text-white">Canadian Staffing Excellence</span>
+                <span className="text-sm font-bold tracking-wide text-white">Health <span className="text-accent">Crew Provider</span></span>
+                <span className="text-white/40 mx-1">·</span>
+                <span className="text-sm text-white/80">Canada's Trusted Agency</span>
               </div>
               
               <h1 className="text-4xl md:text-6xl font-display font-bold text-white leading-tight mb-6">
-                Canada's Trusted <br/>
-                <span className="text-accent">Healthcare Staffing</span> Agency
+                Your Career in<br/>
+                <span className="text-accent">Healthcare</span> Starts Here
               </h1>
               
-              <p className="text-lg md:text-xl text-primary-foreground/90 mb-10 max-w-2xl leading-relaxed">
-                Connecting skilled healthcare professionals with top employers across every province. Your career matters — we match you with the right opportunity.
+              <p className="text-lg md:text-xl text-primary-foreground/85 mb-10 max-w-2xl leading-relaxed">
+                <span className="font-semibold text-white">Health Crew Provider</span> connects skilled LPNs, PSWs, HSWs, and RPNs with top employers across every Canadian province. We match you with the right opportunity.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
@@ -424,7 +426,7 @@ export default function Home() {
                         name="phone"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-foreground">Phone Number *</FormLabel>
+                            <FormLabel className="text-foreground">Phone Number <span className="text-muted-foreground font-normal text-xs">(optional)</span></FormLabel>
                             <FormControl>
                               <Input placeholder="(555) 123-4567" type="tel" className="bg-muted/50" {...field} />
                             </FormControl>
@@ -563,16 +565,27 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             
             {/* Brand */}
-            <div className="space-y-6">
-              <div className="bg-white p-2 rounded-lg inline-block">
-                <img 
-                  src={`${import.meta.env.BASE_URL}logo.jpeg`} 
-                  alt="Health Crew Provider Logo" 
-                  className="h-10 w-auto object-contain"
-                />
+            <div className="space-y-5">
+              <div className="flex items-center gap-3">
+                <div className="bg-white p-1.5 rounded-lg inline-block shrink-0">
+                  <img 
+                    src={`${import.meta.env.BASE_URL}logo.jpeg`} 
+                    alt="Health Crew Provider Logo" 
+                    className="h-10 w-auto object-contain"
+                  />
+                </div>
+                <div className="leading-tight">
+                  <div className="text-base font-extrabold tracking-tight">
+                    <span className="text-white">Health </span>
+                    <span className="text-accent">Crew Provider</span>
+                  </div>
+                  <div className="text-[11px] text-slate-400 font-medium tracking-widest uppercase mt-0.5">
+                    Healthcare Agency
+                  </div>
+                </div>
               </div>
               <p className="text-sm leading-relaxed text-slate-400">
-                Canada's trusted healthcare staffing agency connecting skilled professionals with the facilities that need them most.
+                Canada's trusted healthcare staffing agency — connecting skilled LPNs, PSWs, HSWs, and RPNs with facilities that need them most.
               </p>
             </div>
 
@@ -611,13 +624,7 @@ export default function Home() {
                     healthcrewprovider@gmail.com
                   </a>
                 </li>
-                <li className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-accent shrink-0" />
-                  <a href="tel:+18005550199" className="hover:text-white transition-colors">
-                    1-800-555-0199
-                  </a>
-                </li>
-                <li className="flex items-center gap-3 mt-6">
+                <li className="flex items-center gap-3 mt-2">
                   <Button onClick={() => scrollToSection('contact')} variant="accent" size="sm" className="w-full">
                     Apply Now
                   </Button>
