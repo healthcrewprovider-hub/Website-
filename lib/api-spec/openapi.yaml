@@ -11,6 +11,36 @@ tags:
   - name: health
     description: Health operations
 paths:
+  /contact:
+    post:
+      operationId: submitContact
+      tags: [contact]
+      summary: Submit a job application contact form
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactFormRequest"
+      responses:
+        "200":
+          description: Application submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactFormResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactFormResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactFormResponse"
   /healthz:
     get:
       operationId: healthCheck
@@ -26,6 +56,34 @@ paths:
                 $ref: "#/components/schemas/HealthStatus"
 components:
   schemas:
+    ContactFormRequest:
+      type: object
+      required: [name, email]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        position:
+          type: string
+        province:
+          type: string
+        experience:
+          type: string
+        message:
+          type: string
+    ContactFormResponse:
+      type: object
+      required: [success]
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        error:
+          type: string
     HealthStatus:
       type: object
       properties:

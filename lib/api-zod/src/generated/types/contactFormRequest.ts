@@ -5,6 +5,7 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+
 export interface ContactFormRequest {
   name: string;
   email: string;
@@ -13,14 +14,4 @@ export interface ContactFormRequest {
   province?: string;
   experience?: string;
   message?: string;
-}
-
-export interface ContactFormResponse {
-  success: boolean;
-  message?: string;
-  error?: string;
-}
-
-export interface HealthStatus {
-  status: string;
 }

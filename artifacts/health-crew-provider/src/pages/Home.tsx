@@ -58,16 +58,40 @@ export default function Home() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    setIsSubmitting(false)
-    
-    toast({
-      title: "Application Submitted Successfully!",
-      description: "Our recruitment team will review your details and contact you shortly.",
-      variant: "default",
-    })
-    form.reset()
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: values.fullName,
+          email: values.email,
+          phone: values.phone,
+          position: values.position,
+          province: values.province,
+          experience: values.experience,
+          message: values.message,
+        }),
+      })
+      const data = await response.json()
+      if (data.success) {
+        toast({
+          title: "Application Submitted!",
+          description: "Your application has been sent to our recruitment team. We'll be in touch soon!",
+          variant: "default",
+        })
+        form.reset()
+      } else {
+        throw new Error(data.error || "Submission failed")
+      }
+    } catch (err: any) {
+      toast({
+        title: "Submission Failed",
+        description: err.message || "Please try again or email us directly at healthcrewprovider@gmail.com",
+        variant: "destructive",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const copyEmail = () => {

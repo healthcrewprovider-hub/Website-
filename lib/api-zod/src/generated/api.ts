@@ -8,6 +8,25 @@
 import * as zod from "zod";
 
 /**
+ * @summary Submit a job application contact form
+ */
+export const SubmitContactBody = zod.object({
+  name: zod.string(),
+  email: zod.string(),
+  phone: zod.string().optional(),
+  position: zod.string().optional(),
+  province: zod.string().optional(),
+  experience: zod.string().optional(),
+  message: zod.string().optional(),
+});
+
+export const SubmitContactResponse = zod.object({
+  success: zod.boolean(),
+  message: zod.string().optional(),
+  error: zod.string().optional(),
+});
+
+/**
  * Returns server health status
  * @summary Health check
  */
