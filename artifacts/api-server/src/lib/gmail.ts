@@ -1,6 +1,5 @@
 import { google } from "googleapis";
 
-// Gmail integration via Replit Connectors (google-mail)
 let connectionSettings: any;
 
 async function getAccessToken() {
@@ -47,7 +46,6 @@ async function getAccessToken() {
   return accessToken;
 }
 
-// WARNING: Never cache this client. Access tokens expire.
 export async function getUncachableGmailClient() {
   const accessToken = await getAccessToken();
   const oauth2Client = new google.auth.OAuth2();
@@ -59,23 +57,53 @@ export async function sendEmail({
   to,
   subject,
   body,
+  attachment,
 }: {
   to: string;
   subject: string;
   body: string;
+  attachment?: { filename: string; mimeType: string; data: Buffer };
 }) {
   const gmail = await getUncachableGmailClient();
 
-  const messageParts = [
-    `To: ${to}`,
-    "Content-Type: text/html; charset=utf-8",
-    "MIME-Version: 1.0",
-    `Subject: ${subject}`,
-    "",
-    body,
-  ];
-  const message = messageParts.join("\n");
-  const encodedMessage = Buffer.from(message)
+  const boundary = `boundary_${Date.now()}`;
+  let rawMessage: string;
+
+  if (attachment) {
+    const b64file = attachment.data.toString("base64");
+    rawMessage = [
+      `To: ${to}`,
+      `Subject: ${subject}`,
+      "MIME-Version: 1.0",
+      `Content-Type: multipart/mixed; boundary="${boundary}"`,
+      "",
+      `--${boundary}`,
+      "Content-Type: text/html; charset=utf-8",
+      "Content-Transfer-Encoding: 7bit",
+      "",
+      body,
+      "",
+      `--${boundary}`,
+      `Content-Type: ${attachment.mimeType}; name="${attachment.filename}"`,
+      "Content-Transfer-Encoding: base64",
+      `Content-Disposition: attachment; filename="${attachment.filename}"`,
+      "",
+      b64file,
+      "",
+      `--${boundary}--`,
+    ].join("\r\n");
+  } else {
+    rawMessage = [
+      `To: ${to}`,
+      "Content-Type: text/html; charset=utf-8",
+      "MIME-Version: 1.0",
+      `Subject: ${subject}`,
+      "",
+      body,
+    ].join("\n");
+  }
+
+  const encodedMessage = Buffer.from(rawMessage)
     .toString("base64")
     .replace(/\+/g, "-")
     .replace(/\//g, "_")

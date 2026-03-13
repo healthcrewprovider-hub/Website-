@@ -42,6 +42,7 @@ const formSchema = z.object({
 export default function Home() {
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [resumeFile, setResumeFile] = useState<File | null>(null)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -59,18 +60,19 @@ export default function Home() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
     try {
+      const formData = new FormData()
+      formData.append("name", values.fullName)
+      formData.append("email", values.email)
+      if (values.phone) formData.append("phone", values.phone)
+      formData.append("position", values.position)
+      formData.append("province", values.province)
+      formData.append("experience", values.experience)
+      if (values.message) formData.append("message", values.message)
+      if (resumeFile) formData.append("resume", resumeFile)
+
       const response = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: values.fullName,
-          email: values.email,
-          phone: values.phone,
-          position: values.position,
-          province: values.province,
-          experience: values.experience,
-          message: values.message,
-        }),
+        body: formData,
       })
       const data = await response.json()
       if (data.success) {
@@ -80,6 +82,7 @@ export default function Home() {
           variant: "default",
         })
         form.reset()
+        setResumeFile(null)
       } else {
         throw new Error(data.error || "Submission failed")
       }
@@ -186,32 +189,12 @@ export default function Home() {
                         Canadian Healthcare Staffing Agency
                       </div>
                     </div>
-                    {/* Trust badges */}
-                    <div className="flex gap-3 mt-1">
-                      <span className="px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-bold border border-accent/30">7+ Provinces</span>
-                      <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20">Since 2015</span>
-                      <span className="px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-bold border border-accent/30">500+ Placed</span>
-                    </div>
                   </div>
                 </div>
               </motion.div>
 
             </div>
 
-            {/* Stats Row — full width below both columns */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-8 border-t border-white/10">
-                {[
-                  { value: "500+", label: "Placements" },
-                  { value: "7+", label: "Provinces" },
-                  { value: "10+", label: "Years Experience" },
-                  { value: "95%", label: "Satisfaction Rate" }
-                ].map((stat, idx) => (
-                  <div key={idx}>
-                    <div className="text-3xl font-display font-bold text-white mb-1">{stat.value}</div>
-                    <div className="text-sm text-primary-foreground/70 font-medium">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
           </div>
         </section>
 
@@ -571,19 +554,37 @@ export default function Home() {
                     />
 
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-foreground">Resume Upload</label>
-                      <div className="flex items-center justify-center w-full">
-                        <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-border rounded-xl cursor-pointer bg-muted/20 hover:bg-muted/50 transition-colors">
-                          <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                            <svg className="w-8 h-8 mb-3 text-muted-foreground" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                      <label className="text-sm font-medium text-foreground">
+                        Upload Résumé <span className="text-muted-foreground font-normal text-xs">(optional — PDF, DOC, DOCX, max 10MB)</span>
+                      </label>
+                      <label
+                        htmlFor="resume-upload"
+                        className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-xl cursor-pointer transition-colors ${resumeFile ? "border-accent bg-accent/5" : "border-border bg-muted/20 hover:bg-muted/50"}`}
+                      >
+                        {resumeFile ? (
+                          <div className="flex flex-col items-center gap-2 px-4 text-center">
+                            <svg className="w-7 h-7 text-accent" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                             </svg>
-                            <p className="mb-1 text-sm text-muted-foreground"><span className="font-semibold text-primary">Click to upload</span> or drag and drop</p>
-                            <p className="text-xs text-muted-foreground">PDF, DOC, DOCX (MAX. 10MB)</p>
+                            <p className="text-sm font-semibold text-accent">{resumeFile.name}</p>
+                            <p className="text-xs text-muted-foreground">Click to change file</p>
                           </div>
-                          <input id="dropzone-file" type="file" className="hidden" accept=".pdf,.doc,.docx" />
-                        </label>
-                      </div>
+                        ) : (
+                          <div className="flex flex-col items-center justify-center gap-2">
+                            <svg className="w-8 h-8 text-muted-foreground" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                            </svg>
+                            <p className="text-sm text-muted-foreground"><span className="font-semibold text-primary">Click to upload</span> or drag and drop</p>
+                          </div>
+                        )}
+                        <input
+                          id="resume-upload"
+                          type="file"
+                          className="hidden"
+                          accept=".pdf,.doc,.docx"
+                          onChange={(e) => setResumeFile(e.target.files?.[0] ?? null)}
+                        />
+                      </label>
                     </div>
 
                     <Button type="submit" size="lg" className="w-full text-base h-14 mt-4" disabled={isSubmitting}>

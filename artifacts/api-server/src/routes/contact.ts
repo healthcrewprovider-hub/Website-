@@ -1,11 +1,13 @@
 import { Router, type IRouter } from "express";
+import multer from "multer";
 import { sendEmail } from "../lib/gmail.js";
 
 const router: IRouter = Router();
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
 
 const RECIPIENT_EMAIL = "healthcrewprovider@gmail.com";
 
-router.post("/contact", async (req, res) => {
+router.post("/contact", upload.single("resume"), async (req, res) => {
   try {
     const {
       name,
@@ -47,6 +49,8 @@ router.post("/contact", async (req, res) => {
       "5-10": "5–10 years",
       "10+": "10+ years",
     };
+
+    const resumeFile = req.file;
 
     const htmlBody = `
 <html>
@@ -91,12 +95,12 @@ router.post("/contact", async (req, res) => {
         <td style="padding: 10px 0; white-space: pre-wrap;">${message}</td>
       </tr>` : ""}
     </table>
+    ${resumeFile ? `
     <div style="margin-top: 24px; padding: 16px; background: #e8f5e9; border-radius: 6px; border-left: 4px solid #27ae60;">
       <p style="margin: 0; font-size: 13px; color: #2d6a4f;">
-        <strong>Note:</strong> The applicant may also attach their resume via email directly to 
-        <a href="mailto:${RECIPIENT_EMAIL}" style="color: #1e3a5f;">${RECIPIENT_EMAIL}</a>
+        <strong>Resume attached:</strong> ${resumeFile.originalname} (${(resumeFile.size / 1024).toFixed(1)} KB)
       </p>
-    </div>
+    </div>` : ""}
   </div>
 </body>
 </html>`;
@@ -105,6 +109,13 @@ router.post("/contact", async (req, res) => {
       to: RECIPIENT_EMAIL,
       subject: `New Application from ${name} – ${positionLabels[position] || "Healthcare Role"}`,
       body: htmlBody,
+      attachment: resumeFile
+        ? {
+            filename: resumeFile.originalname,
+            mimeType: resumeFile.mimetype,
+            data: resumeFile.buffer,
+          }
+        : undefined,
     });
 
     res.json({ success: true, message: "Application submitted successfully." });
