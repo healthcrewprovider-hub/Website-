@@ -123,43 +123,83 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/85 to-primary/40"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-3xl"
-            >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 border border-accent/40 backdrop-blur-sm mb-6 shadow-md">
-                <HeartPulse className="w-4 h-4 text-accent" />
-                <span className="text-sm font-bold tracking-wide text-white">Health <span className="text-accent">Crew Provider</span></span>
-                <span className="text-white/40 mx-1">·</span>
-                <span className="text-sm text-white/80">Canada's Trusted Agency</span>
-              </div>
-              
-              <h1 className="text-4xl md:text-6xl font-display font-bold text-white leading-tight mb-6">
-                Your Career in<br/>
-                <span className="text-accent">Healthcare</span> Starts Here
-              </h1>
-              
-              <p className="text-lg md:text-xl text-primary-foreground/85 mb-10 max-w-2xl leading-relaxed">
-                <span className="font-semibold text-white">Health Crew Provider</span> connects skilled LPNs, PSWs, HSWs, and RPNs with top employers across every Canadian province. We match you with the right opportunity.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" variant="accent" onClick={() => scrollToSection('contact')}>
-                  Submit Your Resume
-                  <ChevronRight className="ml-2 w-5 h-5" />
-                </Button>
-                <button
-                  onClick={() => scrollToSection('roles')}
-                  className="h-14 rounded-2xl px-10 text-base font-semibold text-white border-2 border-white/50 hover:bg-white/15 transition-all duration-300 active:scale-95"
-                >
-                  Browse Roles
-                </button>
-              </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-              {/* Stats Row */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-8 border-t border-white/10">
+              {/* LEFT — text content */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 border border-accent/40 backdrop-blur-sm mb-6 shadow-md">
+                  <HeartPulse className="w-4 h-4 text-accent" />
+                  <span className="text-sm font-bold tracking-wide text-white">Health <span className="text-accent">Crew Provider</span></span>
+                  <span className="text-white/40 mx-1">·</span>
+                  <span className="text-sm text-white/80">Canada's Trusted Agency</span>
+                </div>
+                
+                <h1 className="text-4xl md:text-6xl font-display font-bold text-white leading-tight mb-6">
+                  Your Career in<br/>
+                  <span className="text-accent">Healthcare</span> Starts Here
+                </h1>
+                
+                <p className="text-lg md:text-xl text-primary-foreground/85 mb-10 max-w-xl leading-relaxed">
+                  <span className="font-semibold text-white">Health Crew Provider</span> connects skilled LPNs, PSWs, HSWs, and RPNs with top employers across every Canadian province. We match you with the right opportunity.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button size="lg" variant="accent" onClick={() => scrollToSection('contact')}>
+                    Submit Your Resume
+                    <ChevronRight className="ml-2 w-5 h-5" />
+                  </Button>
+                  <button
+                    onClick={() => scrollToSection('roles')}
+                    className="h-14 rounded-2xl px-10 text-base font-semibold text-white border-2 border-white/50 hover:bg-white/15 transition-all duration-300 active:scale-95"
+                  >
+                    Browse Roles
+                  </button>
+                </div>
+              </motion.div>
+
+              {/* RIGHT — large prominent logo card */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.88 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.7, delay: 0.15 }}
+                className="hidden lg:flex justify-center items-center"
+              >
+                <div className="relative">
+                  {/* Outer glow ring */}
+                  <div className="absolute -inset-6 rounded-3xl bg-accent/20 blur-2xl"></div>
+                  {/* Logo card */}
+                  <div className="relative bg-white rounded-3xl p-10 shadow-2xl flex flex-col items-center gap-5 border border-white/60 backdrop-blur-sm">
+                    <img 
+                      src={`${import.meta.env.BASE_URL}logo.jpeg`}
+                      alt="Health Crew Provider Logo"
+                      className="w-52 h-52 object-contain rounded-2xl"
+                    />
+                    <div className="text-center">
+                      <div className="text-2xl font-extrabold tracking-tight text-primary">
+                        Health <span className="text-accent">Crew Provider</span>
+                      </div>
+                      <div className="text-xs font-semibold tracking-widest uppercase text-slate-400 mt-1">
+                        Canadian Healthcare Staffing Agency
+                      </div>
+                    </div>
+                    {/* Trust badges */}
+                    <div className="flex gap-3 mt-1">
+                      <span className="px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-bold border border-accent/30">7+ Provinces</span>
+                      <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20">Since 2015</span>
+                      <span className="px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-bold border border-accent/30">500+ Placed</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+            </div>
+
+            {/* Stats Row — full width below both columns */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-8 border-t border-white/10">
                 {[
                   { value: "500+", label: "Placements" },
                   { value: "7+", label: "Provinces" },
@@ -172,7 +212,6 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-            </motion.div>
           </div>
         </section>
 
