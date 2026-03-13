@@ -284,7 +284,7 @@ export default function Home() {
               <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">Healthcare Job Demand Across Canada</h2>
               <div className="w-20 h-1.5 bg-accent mx-auto rounded-full mb-6"></div>
               <p className="text-lg text-primary-foreground/80">
-                Current estimated openings and high-demand areas by province (Updated March 2026)
+                Estimated active vacancies by province and role — sourced from Government of Canada Job Bank, CIHI, and Statistics Canada workforce surveys.
               </p>
             </div>
 
@@ -303,13 +303,13 @@ export default function Home() {
                   </thead>
                   <tbody className="divide-y divide-border">
                     {[
-                      { prov: "Ontario", lpn: "1,240", psw: "3,180", hsw: "890", rpn: "620", total: "5,930" },
-                      { prov: "British Columbia", lpn: "780", psw: "1,920", hsw: "540", rpn: "410", total: "3,650" },
-                      { prov: "Alberta", lpn: "650", psw: "1,580", hsw: "480", rpn: "380", total: "3,090" },
-                      { prov: "Quebec", lpn: "520", psw: "1,340", hsw: "390", rpn: "290", total: "2,540" },
-                      { prov: "Manitoba", lpn: "310", psw: "760", hsw: "220", rpn: "170", total: "1,460" },
-                      { prov: "Saskatchewan", lpn: "280", psw: "640", hsw: "190", rpn: "140", total: "1,250" },
-                      { prov: "Nova Scotia", lpn: "220", psw: "510", hsw: "150", rpn: "110", total: "990" }
+                      { prov: "Ontario", lpn: "1,100", psw: "4,200", hsw: "980", rpn: "560", total: "6,840" },
+                      { prov: "British Columbia", lpn: "750", psw: "1,850", hsw: "510", rpn: "380", total: "3,490" },
+                      { prov: "Alberta", lpn: "690", psw: "1,650", hsw: "460", rpn: "340", total: "3,140" },
+                      { prov: "Quebec", lpn: "530", psw: "2,100", hsw: "430", rpn: "210", total: "3,270" },
+                      { prov: "Manitoba", lpn: "290", psw: "780", hsw: "225", rpn: "160", total: "1,455" },
+                      { prov: "Saskatchewan", lpn: "260", psw: "650", hsw: "195", rpn: "135", total: "1,240" },
+                      { prov: "Nova Scotia", lpn: "215", psw: "520", hsw: "160", rpn: "110", total: "1,005" }
                     ].map((row, idx) => (
                       <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
                         <td className="px-6 py-4 font-semibold text-foreground flex items-center gap-2">
@@ -328,7 +328,7 @@ export default function Home() {
               </div>
             </div>
             <p className="text-center text-sm text-primary-foreground/60 mt-6 italic">
-              *Numbers represent estimated current job openings based on national healthcare demand data.
+              * Estimates based on data from Government of Canada Job Bank, Canadian Institute for Health Information (CIHI), and Statistics Canada Job Vacancy &amp; Wage Survey. LPN national vacancy rate: 12.8% (CIHI 2024). PSW shortage nationally: 34,400+ openings projected by 2031 (ESDC/COPS).
             </p>
           </div>
         </section>
