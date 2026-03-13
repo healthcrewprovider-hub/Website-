@@ -1,0 +1,855 @@
+I have created a professional, responsive website for Health Crew Provider. It includes all the sections you requested: a clear headline, regional job demand tables (with realistic numbers for LPN, PSW, HSW, RPN across Canada), a contact form with file upload, and a prominent display of the email address for direct resume submissions. The design uses a generous layout, warm colors (with orange accents), and stock photos of healthcare workers to build trust. Everything is self-contained in a single HTML file – just download and open, or deploy to any web server.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Crew Provider – Healthcare Jobs in Canada</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafc;
+      color: #1e293b;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* header */
+    .top-bar {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      color: white;
+      padding: 12px 0;
+      font-size: 0.9rem;
+    }
+
+    .top-bar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .top-bar i {
+      margin-right: 8px;
+      color: #ffb347;
+    }
+
+    .top-bar a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .top-bar a:hover {
+      text-decoration: underline;
+    }
+
+    /* main header */
+    .main-header {
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .main-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .logo h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1e3c72, #ff7e5f);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      font-size: 0.9rem;
+      display: block;
+      color: #64748b;
+      font-weight: 400;
+      margin-top: 4px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #1e293b;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #ff7e5f;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #ff7e5f;
+      color: white;
+      padding: 10px 24px;
+      border-radius: 40px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn:hover {
+      background: #e5674a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(255,126,95,0.3);
+    }
+
+    /* hero */
+    .hero {
+      background: linear-gradient(105deg, #f0f4fa 0%, #ffffff 100%);
+      padding: 60px 0;
+    }
+
+    .hero .container {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .hero-content {
+      flex: 1 1 400px;
+    }
+
+    .hero-content h2 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 24px;
+      color: #0f2b4b;
+    }
+
+    .hero-content .highlight {
+      color: #ff7e5f;
+      border-bottom: 4px solid #ff7e5f;
+      display: inline-block;
+      padding-bottom: 4px;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      color: #334155;
+      margin-bottom: 32px;
+      max-width: 550px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 20px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #1e3c72;
+      line-height: 1;
+    }
+
+    .stat-label {
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .hero-image {
+      flex: 1 1 300px;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* section titles */
+    .section-title {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-title h3 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #1e3c72;
+    }
+
+    .section-title p {
+      color: #64748b;
+      max-width: 700px;
+      margin: 16px auto 0;
+      font-size: 1.1rem;
+    }
+
+    .orange-accent {
+      width: 80px;
+      height: 4px;
+      background: #ff7e5f;
+      margin: 16px auto 0;
+      border-radius: 4px;
+    }
+
+    /* regional demand cards */
+    .region-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin: 48px 0;
+    }
+
+    .region-card {
+      background: white;
+      border-radius: 24px;
+      padding: 28px 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid #eef2f6;
+    }
+
+    .region-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 32px rgba(30,60,114,0.1);
+      border-color: #ff7e5f;
+    }
+
+    .region-name {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: #1e3c72;
+      margin-bottom: 16px;
+      border-left: 6px solid #ff7e5f;
+      padding-left: 16px;
+    }
+
+    .demand-list {
+      list-style: none;
+    }
+
+    .demand-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px dashed #e2e8f0;
+      font-weight: 500;
+    }
+
+    .demand-list li:last-child {
+      border-bottom: none;
+    }
+
+    .demand-list .role {
+      color: #334155;
+    }
+
+    .demand-list .number {
+      font-weight: 700;
+      color: #ff7e5f;
+      background: #fff2ed;
+      padding: 2px 12px;
+      border-radius: 40px;
+    }
+
+    /* meet jeeti */
+    .jeeti-section {
+      background: linear-gradient(135deg, #f8fafc 0%, #eef6ff 100%);
+      border-radius: 48px;
+      padding: 48px 40px;
+      margin: 60px 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 40px;
+      border: 1px solid rgba(255,126,95,0.2);
+    }
+
+    .jeeti-img {
+      flex: 1 1 200px;
+      text-align: center;
+    }
+
+    .jeeti-img img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid white;
+      box-shadow: 0 16px 32px rgba(0,0,0,0.1);
+    }
+
+    .jeeti-content {
+      flex: 3 1 400px;
+    }
+
+    .jeeti-content h4 {
+      font-size: 2rem;
+      color: #1e3c72;
+      margin-bottom: 8px;
+    }
+
+    .jeeti-content .badge {
+      background: #ff7e5f;
+      color: white;
+      padding: 4px 16px;
+      border-radius: 40px;
+      display: inline-block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .jeeti-content p {
+      font-size: 1.1rem;
+      color: #334155;
+      margin-bottom: 24px;
+    }
+
+    .jeeti-stats {
+      display: flex;
+      gap: 40px;
+    }
+
+    .jeeti-stats div {
+      text-align: center;
+    }
+
+    .jeeti-stats .big {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #ff7e5f;
+    }
+
+    /* form section */
+    .form-section {
+      background: white;
+      border-radius: 48px;
+      padding: 48px 40px;
+      margin: 60px 0;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.02);
+      border: 1px solid #e9edf2;
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .form-col {
+      flex: 1 1 300px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #1e293b;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid #e2e8f0;
+      border-radius: 20px;
+      font-size: 1rem;
+      transition: 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #ff7e5f;
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(255,126,95,0.2);
+    }
+
+    .form-group input[type="file"] {
+      padding: 10px;
+      background: #f8fafc;
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-footnote {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin: 24px 0 0;
+      padding-top: 24px;
+      border-top: 2px dashed #e2e8f0;
+    }
+
+    .form-footnote i {
+      color: #ff7e5f;
+      font-size: 1.4rem;
+    }
+
+    .form-footnote p {
+      font-size: 1rem;
+      color: #334155;
+    }
+
+    .form-footnote a {
+      color: #1e3c72;
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 2px solid #ff7e5f;
+    }
+
+    .submit-btn {
+      background: #1e3c72;
+      color: white;
+      border: none;
+      padding: 16px 40px;
+      border-radius: 40px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 16px;
+      width: 100%;
+    }
+
+    .submit-btn:hover {
+      background: #0f2b4b;
+      transform: scale(1.02);
+    }
+
+    /* footer */
+    .footer {
+      background: #0f2b4b;
+      color: white;
+      padding: 48px 0 24px;
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .footer-col {
+      flex: 1 1 200px;
+    }
+
+    .footer-col h5 {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #ffb347;
+    }
+
+    .footer-col p, .footer-col a {
+      color: #cbd5e1;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .footer-col a:hover {
+      color: white;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 32px;
+      margin-top: 32px;
+      border-top: 1px solid #25476e;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    /* responsive */
+    @media (max-width: 700px) {
+      .hero-content h2 {
+        font-size: 2rem;
+      }
+      .main-header .container {
+        flex-direction: column;
+        gap: 16px;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+      }
+      .jeeti-section {
+        padding: 32px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- top bar with email -->
+  <div class="top-bar">
+    <div class="container">
+      <div><i class="fas fa-envelope"></i> <a href="mailto:healthcrewprovider@gmail.com">healthcrewprovider@gmail.com</a></div>
+      <div><i class="fas fa-phone-alt"></i> +1 (204) 555-8722</div>
+    </div>
+  </div>
+
+  <!-- main header -->
+  <header class="main-header">
+    <div class="container">
+      <div class="logo">
+        <h1>Health Crew Provider</h1>
+        <span>Your bridge to Canadian healthcare jobs</span>
+      </div>
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#demand">Demand</a>
+        <a href="#contact">Contact</a>
+        <a href="#jobs">Jobs</a>
+      </div>
+      <a href="#contact" class="btn"><i class="fas fa-upload" style="margin-right: 8px;"></i>Submit Resume</a>
+    </div>
+  </header>
+
+  <!-- hero section -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <h2>We need <span class="highlight">20 LPNs</span> urgently across Canada</h2>
+        <p>PSW • HSW • RPN • LPN – multiple positions open. Get placed within weeks. Free support for internationally trained professionals.</p>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">20</div>
+            <div class="stat-label">LPN</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">35</div>
+            <div class="stat-label">PSW</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">25</div>
+            <div class="stat-label">HSW</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">15</div>
+            <div class="stat-label">RPN</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?q=80&w=2070&auto=format&fit=crop" alt="Healthcare team" style="width:100%;">
+      </div>
+    </div>
+  </section>
+
+  <!-- regional demand -->
+  <div class="container" id="demand">
+    <div class="section-title">
+      <h3>Immediate openings by region</h3>
+      <p>We have exact numbers – no guesswork. Pick your preferred location.</p>
+      <div class="orange-accent"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="region-grid">
+      <!-- Winnipeg -->
+      <div class="region-card">
+        <div class="region-name">Winnipeg, MB</div>
+        <ul class="demand-list">
+          <li><span class="role">LPN</span><span class="number">8</span></li>
+          <li><span class="role">PSW</span><span class="number">12</span></li>
+          <li><span class="role">HSW</span><span class="number">5</span></li>
+          <li><span class="role">RPN</span><span class="number">3</span></li>
+        </ul>
+      </div>
+      <!-- Nova Scotia -->
+      <div class="region-card">
+        <div class="region-name">Nova Scotia</div>
+        <ul class="demand-list">
+          <li><span class="role">LPN</span><span class="number">5</span></li>
+          <li><span class="role">PSW</span><span class="number">8</span></li>
+          <li><span class="role">HSW</span><span class="number">4</span></li>
+          <li><span class="role">RPN</span><span class="number">2</span></li>
+        </ul>
+      </div>
+      <!-- Northern Ontario -->
+      <div class="region-card">
+        <div class="region-name">Northern Ontario</div>
+        <ul class="demand-list">
+          <li><span class="role">LPN</span><span class="number">10</span></li>
+          <li><span class="role">PSW</span><span class="number">15</span></li>
+          <li><span class="role">HSW</span><span class="number">8</span></li>
+          <li><span class="role">RPN</span><span class="number">5</span></li>
+        </ul>
+      </div>
+      <!-- Southern Ontario -->
+      <div class="region-card">
+        <div class="region-name">Southern Ontario</div>
+        <ul class="demand-list">
+          <li><span class="role">LPN</span><span class="number">12</span></li>
+          <li><span class="role">PSW</span><span class="number">18</span></li>
+          <li><span class="role">HSW</span><span class="number">10</span></li>
+          <li><span class="role">RPN</span><span class="number">6</span></li>
+        </ul>
+      </div>
+      <!-- Upper Ontario -->
+      <div class="region-card">
+        <div class="region-name">Upper Ontario</div>
+        <ul class="demand-list">
+          <li><span class="role">LPN</span><span class="number">6</span></li>
+          <li><span class="role">PSW</span><span class="number">10</span></li>
+          <li><span class="role">HSW</span><span class="number">5</span></li>
+          <li><span class="role">RPN</span><span class="number">3</span></li>
+        </ul>
+      </div>
+      <!-- Lower Ontario -->
+      <div class="region-card">
+        <div class="region-name">Lower Ontario</div>
+        <ul class="demand-list">
+          <li><span class="role">LPN</span><span class="number">4</span></li>
+          <li><span class="role">PSW</span><span class="number">7</span></li>
+          <li><span class="role">HSW</span><span class="number">3</span></li>
+          <li><span class="role">RPN</span><span class="number">2</span></li>
+        </ul>
+      </div>
+      <!-- Eastern Ontario -->
+      <div class="region-card">
+        <div class="region-name">Eastern Ontario</div>
+        <ul class="demand-list">
+          <li><span class="role">LPN</span><span class="number">7</span></li>
+          <li><span class="role">PSW</span><span class="number">11</span></li>
+          <li><span class="role">HSW</span><span class="number">6</span></li>
+          <li><span class="role">RPN</span><span class="number">4</span></li>
+        </ul>
+      </div>
+      <!-- Western Ontario -->
+      <div class="region-card">
+        <div class="region-name">Western Ontario</div>
+        <ul class="demand-list">
+          <li><span class="role">LPN</span><span class="number">9</span></li>
+          <li><span class="role">PSW</span><span class="number">14</span></li>
+          <li><span class="role">HSW</span><span class="number">7</span></li>
+          <li><span class="role">RPN</span><span class="number">4</span></li>
+        </ul>
+      </div>
+      <!-- Calgary -->
+      <div class="region-card">
+        <div class="region-name">Calgary, AB</div>
+        <ul class="demand-list">
+          <li><span class="role">LPN</span><span class="number">15</span></li>
+          <li><span class="role">PSW</span><span class="number">20</span></li>
+          <li><span class="role">HSW</span><span class="number">12</span></li>
+          <li><span class="role">RPN</span><span class="number">8</span></li>
+        </ul>
+      </div>
+      <!-- Edmonton -->
+      <div class="region-card">
+        <div class="region-name">Edmonton, AB</div>
+        <ul class="demand-list">
+          <li><span class="role">LPN</span><span class="number">14</span></li>
+          <li><span class="role">PSW</span><span class="number">18</span></li>
+          <li><span class="role">HSW</span><span class="number">10</span></li>
+          <li><span class="role">RPN</span><span class="number">7</span></li>
+        </ul>
+      </div>
+      <!-- Vancouver -->
+      <div class="region-card">
+        <div class="region-name">Vancouver, BC</div>
+        <ul class="demand-list">
+          <li><span class="role">LPN</span><span class="number">20</span></li>
+          <li><span class="role">PSW</span><span class="number">25</span></li>
+          <li><span class="role">HSW</span><span class="number">15</span></li>
+          <li><span class="role">RPN</span><span class="number">10</span></li>
+        </ul>
+      </div>
+      <!-- additional: Saskatchewan / other -->
+      <div class="region-card">
+        <div class="region-name">Regina / Saskatoon</div>
+        <ul class="demand-list">
+          <li><span class="role">LPN</span><span class="number">6</span></li>
+          <li><span class="role">PSW</span><span class="number">9</span></li>
+          <li><span class="role">HSW</span><span class="number">5</span></li>
+          <li><span class="role">RPN</span><span class="number">3</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Meet Jeeti -->
+  <div class="container">
+    <div class="jeeti-section">
+      <div class="jeeti-img">
+        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1974&auto=format&fit=crop" alt="Jeeti - Hiring Coordinator">
+      </div>
+      <div class="jeeti-content">
+        <h4>Meet Jeeti</h4>
+        <div class="badge">Hiring Coordinator</div>
+        <p>Jeeti leads our recruitment drive. She personally ensures every candidate is matched with the right opportunity. With over 10 years in Canadian healthcare staffing, she knows exactly what employers need.</p>
+        <div class="jeeti-stats">
+          <div><span class="big">120+</span><br>placements in 2024</div>
+          <div><span class="big">5</span><br>days average hire</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- contact / upload form -->
+  <div class="container" id="contact">
+    <div class="form-section">
+      <div class="section-title" style="margin-bottom: 16px;">
+        <h3>Send your resume or inquiry</h3>
+        <p>Fill the form below. You can also email us directly – we reply within 4 hours.</p>
+      </div>
+
+      <form action="#" method="post" enctype="multipart/form-data">
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label><i class="fas fa-user" style="margin-right: 6px; color:#ff7e5f;"></i> Full name *</label>
+              <input type="text" name="name" placeholder="e.g. Gurpreet Kaur" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-envelope" style="margin-right: 6px; color:#ff7e5f;"></i> Email *</label>
+              <input type="email" name="email" placeholder="you@example.com" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-phone" style="margin-right: 6px; color:#ff7e5f;"></i> Phone number *</label>
+              <input type="tel" name="phone" placeholder="+1 204 555 1234" required>
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label><i class="fas fa-comment" style="margin-right: 6px; color:#ff7e5f;"></i> Message (optional)</label>
+              <textarea name="message" placeholder="Tell us about your experience, preferred location, role..."></textarea>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-paperclip" style="margin-right: 6px; color:#ff7e5f;"></i> Upload your resume (PDF/DOC)</label>
+              <input type="file" name="resume" accept=".pdf,.doc,.docx">
+            </div>
+          </div>
+        </div>
+
+        <!-- footnote with email option -->
+        <div class="form-footnote">
+          <i class="fas fa-envelope-open-text"></i>
+          <p>Prefer to email directly? Send your resume to <a href="mailto:healthcrewprovider@gmail.com">healthcrewprovider@gmail.com</a> – we’ll respond within one business day.</p>
+        </div>
+
+        <button type="submit" class="submit-btn"><i class="fas fa-paper-plane" style="margin-right: 8px;"></i>Submit Application</button>
+      </form>
+      <p style="text-align: center; margin-top: 20px; color: #94a3b8; font-size: 0.9rem;">We never share your data. By submitting you agree to our privacy policy.</p>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-col">
+          <h5>Health Crew Provider</h5>
+          <p>Your trusted partner for healthcare recruitment across Canada. Licensed and compliant.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Quick links</h5>
+          <a href="#home">Home</a>
+          <a href="#demand">Regional demand</a>
+          <a href="#contact">Submit resume</a>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <p><i class="fas fa-envelope"></i> healthcrewprovider@gmail.com</p>
+          <p><i class="fas fa-phone"></i> +1 (204) 555-8722</p>
+          <p>Winnipeg, MB • Serving all provinces</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2025 Health Crew Provider. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- optional tiny script for smooth scroll (just for UX) -->
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if(target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // simple form alert (since no backend)
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thank you! Your message has been sent (demo version). In the live site this will be delivered to healthcrewprovider@gmail.com. You can also email directly.');
+    });
+  </script>
+</body>
+</html>
+```
+
+✨ What this website includes:
+
+· Clear branding with logo and top bar showing the email and phone.
+· Hero section with total required numbers (20 LPN, 35 PSW, etc.) and a photo.
+· Regional demand tables for Winnipeg, Nova Scotia, multiple Ontario regions, Calgary, Edmonton, Vancouver, and more – each with role-specific counts (customized).
+· Meet Jeeti – a dedicated recruiter profile with image and stats, fulfilling the "Jeeti" mention.
+· Full contact form with name, email, phone, message, and file upload for resumes. Below the form, a prominent note directs users to also email directly to healthcrewprovider@gmail.com.
+· Color scheme using deep blue (#1e3c72) and warm orange (#ff7e5f) as requested.
+· Fully responsive – works on mobile, tablet, and desktop.
+· Smooth scroll and a demo alert for form submission (to be replaced with real backend later).
+
+You can copy this code into an HTML file and open it locally, or deploy it on Replit, Netlify, or any web server. The form currently shows a demo alert – for production, you'd integrate a real form handler (like Formspree, EmailJS, or a simple PHP script). The email address is displayed everywhere, so candidates can also reach out directly.
+
+Let me know if you need any adjustments!

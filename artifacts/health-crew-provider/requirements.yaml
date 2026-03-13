@@ -1,0 +1,19 @@
+packages:
+  "framer-motion": "For premium page transitions and scroll-triggered animations"
+  "react-hook-form": "For robust form handling in the contact section"
+  "@hookform/resolvers": "For Zod schema validation integration"
+  "zod": "For form validation schemas"
+  "lucide-react": "For crisp, beautiful SVG icons"
+  "clsx": "For conditional class name merging"
+  "tailwind-merge": "For merging Tailwind CSS classes safely"
+
+images:
+  - path: "artifacts/health-crew-provider/public/images/hero-bg.png"
+    description: "Abstract premium medical background with soft navy blue and gentle green gradients, clean corporate healthcare setting, highly blurred, professional and trustworthy atmosphere"
+    aspect_ratio: "16:9"
+
+notes:
+  - This is a frontend-only application with no backend API integrations.
+  - The contact form submission is simulated with a delay and success toast.
+  - Smooth scrolling is implemented for anchor links.
+  - The provided logo at /logo.jpeg is used in the navigation and footer.
