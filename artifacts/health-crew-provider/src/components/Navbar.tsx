@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Menu, X, Mail } from "lucide-react"
+import { Menu, X, Mail, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function Navbar() {
@@ -36,6 +36,10 @@ export default function Navbar() {
             <a href="mailto:healthcrewprovider@gmail.com" className="flex items-center gap-2 hover:text-accent transition-colors font-medium">
               <Mail className="w-3.5 h-3.5" />
               healthcrewprovider@gmail.com
+            </a>
+            <a href="tel:+14373709094" className="flex items-center gap-2 hover:text-accent transition-colors font-medium">
+              <Phone className="w-3.5 h-3.5" />
+              437-370-9094
             </a>
           </div>
           <div className="flex items-center gap-3 ml-auto">

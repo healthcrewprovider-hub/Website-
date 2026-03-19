@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { 
   HeartPulse, UserRound, Users, Stethoscope, 
-  MapPin, CheckCircle, ChevronRight, Copy, Mail, ShieldCheck, Award
+  MapPin, CheckCircle, ChevronRight, Copy, Mail, ShieldCheck, Award, Phone
 } from "lucide-react"
 
 import Navbar from "@/components/Navbar"
@@ -662,6 +662,12 @@ export default function Home() {
                   <Mail className="w-5 h-5 text-accent shrink-0" />
                   <a href="mailto:healthcrewprovider@gmail.com" className="hover:text-white transition-colors break-all">
                     healthcrewprovider@gmail.com
+                  </a>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Phone className="w-5 h-5 text-accent shrink-0" />
+                  <a href="tel:+14373709094" className="hover:text-white transition-colors">
+                    437-370-9094
                   </a>
                 </li>
                 <li className="flex items-center gap-3 mt-2">
