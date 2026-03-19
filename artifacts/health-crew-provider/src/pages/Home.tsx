@@ -198,52 +198,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ABOUT SECTION */}
-        <section id="about" className="py-24 bg-background">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">About Health Crew Provider</h2>
-              <div className="w-20 h-1.5 bg-accent mx-auto rounded-full mb-6"></div>
-              <p className="text-lg text-muted-foreground">
-                We are a premier healthcare staffing agency dedicated to connecting passionate professionals 
-                like LPNs, PSWs, HSWs, and RPNs with facilities that urgently need their skills across Canada.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {[
-                {
-                  icon: <ShieldCheck className="w-8 h-8 text-accent" />,
-                  title: "Trusted Placements",
-                  desc: "We rigorously vet all facilities to ensure our staff work in safe, supportive, and rewarding environments."
-                },
-                {
-                  icon: <MapPin className="w-8 h-8 text-accent" />,
-                  title: "Canada-Wide Network",
-                  desc: "From British Columbia to Nova Scotia, our expansive network means you can work where you want to live."
-                },
-                {
-                  icon: <UserRound className="w-8 h-8 text-accent" />,
-                  title: "Dedicated Support",
-                  desc: "Our team provides 24/7 support, helping with licensing, relocation advice, and ongoing career development."
-                }
-              ].map((feature, idx) => (
-                <motion.div 
-                  key={idx}
-                  whileHover={{ y: -5 }}
-                  className="bg-card p-8 rounded-2xl shadow-md border border-border/50 hover:shadow-xl transition-all duration-300"
-                >
-                  <div className="w-16 h-16 bg-accent/10 rounded-xl flex items-center justify-center mb-6">
-                    {feature.icon}
-                  </div>
-                  <h3 className="text-xl font-bold text-foreground mb-3">{feature.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{feature.desc}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ROLES WE PLACE SECTION */}
         <section id="roles" className="py-24 bg-muted/30">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -282,9 +236,12 @@ export default function Home() {
                   </div>
                   <h4 className="text-sm font-semibold text-primary mb-4">{role.full}</h4>
                   <p className="text-muted-foreground text-sm leading-relaxed mb-6">{role.desc}</p>
-                  <div className="mt-auto flex items-center text-sm font-semibold text-accent group-hover:translate-x-1 transition-transform">
-                    Learn more <ChevronRight className="w-4 h-4 ml-1" />
-                  </div>
+                  <button
+                    onClick={() => scrollToSection('contact')}
+                    className="mt-auto flex items-center text-sm font-semibold text-accent group-hover:translate-x-1 transition-transform cursor-pointer"
+                  >
+                    Apply for this role <ChevronRight className="w-4 h-4 ml-1" />
+                  </button>
                 </motion.div>
               ))}
             </div>
@@ -292,68 +249,6 @@ export default function Home() {
             <Button onClick={() => scrollToSection('contact')} className="w-full mt-8 md:hidden">
               Apply for a Role
             </Button>
-          </div>
-        </section>
-
-        {/* REGIONAL JOB DEMAND TABLE SECTION */}
-        <section id="regions" className="py-24 bg-primary text-primary-foreground relative overflow-hidden">
-          {/* Subtle background decoration */}
-          <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
-            <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-white blur-3xl"></div>
-            <div className="absolute bottom-10 left-10 w-64 h-64 rounded-full bg-accent blur-3xl"></div>
-          </div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">Healthcare Job Demand Across Canada</h2>
-              <div className="w-20 h-1.5 bg-accent mx-auto rounded-full mb-6"></div>
-              <p className="text-lg text-primary-foreground/80">
-                Estimated active vacancies by province and role — sourced from Government of Canada Job Bank, CIHI, and Statistics Canada workforce surveys.
-              </p>
-            </div>
-
-            <div className="bg-card rounded-2xl shadow-2xl overflow-hidden border border-border">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-foreground whitespace-nowrap">
-                  <thead className="bg-slate-50 border-b border-border">
-                    <tr>
-                      <th className="px-6 py-5 font-bold text-sm uppercase tracking-wider text-slate-700">Province</th>
-                      <th className="px-6 py-5 font-bold text-sm uppercase tracking-wider text-slate-700">LPN</th>
-                      <th className="px-6 py-5 font-bold text-sm uppercase tracking-wider text-slate-700">PSW</th>
-                      <th className="px-6 py-5 font-bold text-sm uppercase tracking-wider text-slate-700">HSW</th>
-                      <th className="px-6 py-5 font-bold text-sm uppercase tracking-wider text-slate-700">RPN</th>
-                      <th className="px-6 py-5 font-bold text-sm uppercase tracking-wider text-primary bg-primary/5">Total Openings</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-border">
-                    {[
-                      { prov: "Ontario", lpn: "1,100", psw: "4,200", hsw: "980", rpn: "560", total: "6,840" },
-                      { prov: "British Columbia", lpn: "750", psw: "1,850", hsw: "510", rpn: "380", total: "3,490" },
-                      { prov: "Alberta", lpn: "690", psw: "1,650", hsw: "460", rpn: "340", total: "3,140" },
-                      { prov: "Quebec", lpn: "530", psw: "2,100", hsw: "430", rpn: "210", total: "3,270" },
-                      { prov: "Manitoba", lpn: "290", psw: "780", hsw: "225", rpn: "160", total: "1,455" },
-                      { prov: "Saskatchewan", lpn: "260", psw: "650", hsw: "195", rpn: "135", total: "1,240" },
-                      { prov: "Nova Scotia", lpn: "215", psw: "520", hsw: "160", rpn: "110", total: "1,005" }
-                    ].map((row, idx) => (
-                      <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
-                        <td className="px-6 py-4 font-semibold text-foreground flex items-center gap-2">
-                          <MapPin className="w-4 h-4 text-muted-foreground" />
-                          {row.prov}
-                        </td>
-                        <td className="px-6 py-4 text-muted-foreground">{row.lpn}</td>
-                        <td className="px-6 py-4 text-muted-foreground">{row.psw}</td>
-                        <td className="px-6 py-4 text-muted-foreground">{row.hsw}</td>
-                        <td className="px-6 py-4 text-muted-foreground">{row.rpn}</td>
-                        <td className="px-6 py-4 font-bold text-primary bg-primary/5">{row.total}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <p className="text-center text-sm text-primary-foreground/60 mt-6 italic">
-              * Estimates based on data from Government of Canada Job Bank, Canadian Institute for Health Information (CIHI), and Statistics Canada Job Vacancy &amp; Wage Survey. LPN national vacancy rate: 12.8% (CIHI 2024). PSW shortage nationally: 34,400+ openings projected by 2031 (ESDC/COPS).
-            </p>
           </div>
         </section>
 
@@ -390,7 +285,7 @@ export default function Home() {
 
                 <div className="bg-card border border-border rounded-2xl p-8 shadow-sm">
                   <h3 className="text-xl font-bold text-foreground mb-4 border-b border-border pb-4">Why Apply With Us?</h3>
-                  <ul className="space-y-4">
+                  <ul className="space-y-4 mb-6">
                     {[
                       "Competitive compensation packages",
                       "Flexible scheduling options",
@@ -403,6 +298,17 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
+                  <div className="border-t border-border pt-5 space-y-3">
+                    <p className="text-sm font-semibold text-foreground">Reach us directly:</p>
+                    <a href="tel:+14373709094" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-accent transition-colors">
+                      <Phone className="w-4 h-4 text-accent shrink-0" />
+                      437-370-9094
+                    </a>
+                    <a href="mailto:healthcrewprovider@gmail.com" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-accent transition-colors break-all">
+                      <Mail className="w-4 h-4 text-accent shrink-0" />
+                      healthcrewprovider@gmail.com
+                    </a>
+                  </div>
                 </div>
               </div>
 
@@ -597,6 +503,114 @@ export default function Home() {
             </div>
           </div>
         </section>
+        {/* ABOUT SECTION */}
+        <section id="about" className="py-24 bg-background">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">About Health Crew Provider</h2>
+              <div className="w-20 h-1.5 bg-accent mx-auto rounded-full mb-6"></div>
+              <p className="text-lg text-muted-foreground">
+                We are a premier healthcare staffing agency dedicated to connecting passionate professionals 
+                like LPNs, PSWs, HSWs, and RPNs with facilities that urgently need their skills across Canada.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  icon: <ShieldCheck className="w-8 h-8 text-accent" />,
+                  title: "Trusted Placements",
+                  desc: "We rigorously vet all facilities to ensure our staff work in safe, supportive, and rewarding environments."
+                },
+                {
+                  icon: <MapPin className="w-8 h-8 text-accent" />,
+                  title: "Canada-Wide Network",
+                  desc: "From British Columbia to Nova Scotia, our expansive network means you can work where you want to live."
+                },
+                {
+                  icon: <UserRound className="w-8 h-8 text-accent" />,
+                  title: "Dedicated Support",
+                  desc: "Our team provides 24/7 support, helping with licensing, relocation advice, and ongoing career development."
+                }
+              ].map((feature, idx) => (
+                <motion.div 
+                  key={idx}
+                  whileHover={{ y: -5 }}
+                  className="bg-card p-8 rounded-2xl shadow-md border border-border/50 hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="w-16 h-16 bg-accent/10 rounded-xl flex items-center justify-center mb-6">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-foreground mb-3">{feature.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{feature.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* REGIONAL JOB DEMAND TABLE SECTION */}
+        <section id="regions" className="py-24 bg-primary text-primary-foreground relative overflow-hidden">
+          {/* Subtle background decoration */}
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
+            <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-white blur-3xl"></div>
+            <div className="absolute bottom-10 left-10 w-64 h-64 rounded-full bg-accent blur-3xl"></div>
+          </div>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">Healthcare Job Demand Across Canada</h2>
+              <div className="w-20 h-1.5 bg-accent mx-auto rounded-full mb-6"></div>
+              <p className="text-lg text-primary-foreground/80">
+                Estimated active vacancies by province and role — sourced from Government of Canada Job Bank, CIHI, and Statistics Canada workforce surveys.
+              </p>
+            </div>
+
+            <div className="bg-card rounded-2xl shadow-2xl overflow-hidden border border-border">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-foreground whitespace-nowrap">
+                  <thead className="bg-slate-50 border-b border-border">
+                    <tr>
+                      <th className="px-6 py-5 font-bold text-sm uppercase tracking-wider text-slate-700">Province</th>
+                      <th className="px-6 py-5 font-bold text-sm uppercase tracking-wider text-slate-700">LPN</th>
+                      <th className="px-6 py-5 font-bold text-sm uppercase tracking-wider text-slate-700">PSW</th>
+                      <th className="px-6 py-5 font-bold text-sm uppercase tracking-wider text-slate-700">HSW</th>
+                      <th className="px-6 py-5 font-bold text-sm uppercase tracking-wider text-slate-700">RPN</th>
+                      <th className="px-6 py-5 font-bold text-sm uppercase tracking-wider text-primary bg-primary/5">Total Openings</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border">
+                    {[
+                      { prov: "Ontario", lpn: "1,100", psw: "4,200", hsw: "980", rpn: "560", total: "6,840" },
+                      { prov: "British Columbia", lpn: "750", psw: "1,850", hsw: "510", rpn: "380", total: "3,490" },
+                      { prov: "Alberta", lpn: "690", psw: "1,650", hsw: "460", rpn: "340", total: "3,140" },
+                      { prov: "Quebec", lpn: "530", psw: "2,100", hsw: "430", rpn: "210", total: "3,270" },
+                      { prov: "Manitoba", lpn: "290", psw: "780", hsw: "225", rpn: "160", total: "1,455" },
+                      { prov: "Saskatchewan", lpn: "260", psw: "650", hsw: "195", rpn: "135", total: "1,240" },
+                      { prov: "Nova Scotia", lpn: "215", psw: "520", hsw: "160", rpn: "110", total: "1,005" }
+                    ].map((row, idx) => (
+                      <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
+                        <td className="px-6 py-4 font-semibold text-foreground flex items-center gap-2">
+                          <MapPin className="w-4 h-4 text-muted-foreground" />
+                          {row.prov}
+                        </td>
+                        <td className="px-6 py-4 text-muted-foreground">{row.lpn}</td>
+                        <td className="px-6 py-4 text-muted-foreground">{row.psw}</td>
+                        <td className="px-6 py-4 text-muted-foreground">{row.hsw}</td>
+                        <td className="px-6 py-4 text-muted-foreground">{row.rpn}</td>
+                        <td className="px-6 py-4 font-bold text-primary bg-primary/5">{row.total}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <p className="text-center text-sm text-primary-foreground/60 mt-6 italic">
+              * Estimates based on data from Government of Canada Job Bank, Canadian Institute for Health Information (CIHI), and Statistics Canada Job Vacancy &amp; Wage Survey. LPN national vacancy rate: 12.8% (CIHI 2024). PSW shortage nationally: 34,400+ openings projected by 2031 (ESDC/COPS).
+            </p>
+          </div>
+        </section>
+
       </main>
 
       {/* FOOTER */}
@@ -634,8 +648,9 @@ export default function Home() {
               <h4 className="text-white font-bold mb-6 text-lg tracking-wide">Quick Links</h4>
               <ul className="space-y-3 text-sm">
                 <li><a href="#" className="hover:text-accent transition-colors">Home</a></li>
-                <li><a href="#about" className="hover:text-accent transition-colors">About Us</a></li>
                 <li><a href="#roles" className="hover:text-accent transition-colors">Roles We Place</a></li>
+                <li><a href="#contact" className="hover:text-accent transition-colors">Apply Now</a></li>
+                <li><a href="#about" className="hover:text-accent transition-colors">About Us</a></li>
                 <li><a href="#regions" className="hover:text-accent transition-colors">Job Demand Regions</a></li>
               </ul>
             </div>

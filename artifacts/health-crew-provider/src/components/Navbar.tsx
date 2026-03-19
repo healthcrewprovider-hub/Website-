@@ -16,10 +16,10 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Home", href: "#" },
-    { name: "About Us", href: "#about" },
     { name: "Roles", href: "#roles" },
+    { name: "Apply", href: "#contact" },
+    { name: "About Us", href: "#about" },
     { name: "Regions", href: "#regions" },
-    { name: "Contact", href: "#contact" },
   ]
 
   const scrollToContact = () => {
