@@ -34,7 +34,7 @@ async function getAccessToken() {
     }
   )
     .then((res) => res.json())
-    .then((data) => data.items?.[0]);
+    .then((data) => (data as any).items?.[0]);
 
   const accessToken =
     connectionSettings?.settings?.access_token ||
