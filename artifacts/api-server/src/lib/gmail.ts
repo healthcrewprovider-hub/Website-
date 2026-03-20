@@ -1,56 +1,19 @@
-import { google } from "googleapis";
+import nodemailer from "nodemailer";
 
-let connectionSettings: any;
+function createTransporter() {
+  const user = process.env.GMAIL_USER;
+  const pass = process.env.GMAIL_APP_PASSWORD;
 
-async function getAccessToken() {
-  if (
-    connectionSettings &&
-    connectionSettings.settings.expires_at &&
-    new Date(connectionSettings.settings.expires_at).getTime() > Date.now()
-  ) {
-    return connectionSettings.settings.access_token;
+  if (!user || !pass) {
+    throw new Error(
+      "Missing GMAIL_USER or GMAIL_APP_PASSWORD environment variables."
+    );
   }
 
-  const hostname = process.env.REPLIT_CONNECTORS_HOSTNAME;
-  const xReplitToken = process.env.REPL_IDENTITY
-    ? "repl " + process.env.REPL_IDENTITY
-    : process.env.WEB_REPL_RENEWAL
-      ? "depl " + process.env.WEB_REPL_RENEWAL
-      : null;
-
-  if (!xReplitToken) {
-    throw new Error("X-Replit-Token not found for repl/depl");
-  }
-
-  connectionSettings = await fetch(
-    "https://" +
-      hostname +
-      "/api/v2/connection?include_secrets=true&connector_names=google-mail",
-    {
-      headers: {
-        Accept: "application/json",
-        "X-Replit-Token": xReplitToken,
-      },
-    }
-  )
-    .then((res) => res.json())
-    .then((data) => (data as any).items?.[0]);
-
-  const accessToken =
-    connectionSettings?.settings?.access_token ||
-    connectionSettings.settings?.oauth?.credentials?.access_token;
-
-  if (!connectionSettings || !accessToken) {
-    throw new Error("Gmail not connected");
-  }
-  return accessToken;
-}
-
-export async function getUncachableGmailClient() {
-  const accessToken = await getAccessToken();
-  const oauth2Client = new google.auth.OAuth2();
-  oauth2Client.setCredentials({ access_token: accessToken });
-  return google.gmail({ version: "v1", auth: oauth2Client });
+  return nodemailer.createTransport({
+    service: "gmail",
+    auth: { user, pass },
+  });
 }
 
 export async function sendEmail({
@@ -64,53 +27,21 @@ export async function sendEmail({
   body: string;
   attachment?: { filename: string; mimeType: string; data: Buffer };
 }) {
-  const gmail = await getUncachableGmailClient();
+  const transporter = createTransporter();
 
-  const boundary = `boundary_${Date.now()}`;
-  let rawMessage: string;
-
-  if (attachment) {
-    const b64file = attachment.data.toString("base64");
-    rawMessage = [
-      `To: ${to}`,
-      `Subject: ${subject}`,
-      "MIME-Version: 1.0",
-      `Content-Type: multipart/mixed; boundary="${boundary}"`,
-      "",
-      `--${boundary}`,
-      "Content-Type: text/html; charset=utf-8",
-      "Content-Transfer-Encoding: 7bit",
-      "",
-      body,
-      "",
-      `--${boundary}`,
-      `Content-Type: ${attachment.mimeType}; name="${attachment.filename}"`,
-      "Content-Transfer-Encoding: base64",
-      `Content-Disposition: attachment; filename="${attachment.filename}"`,
-      "",
-      b64file,
-      "",
-      `--${boundary}--`,
-    ].join("\r\n");
-  } else {
-    rawMessage = [
-      `To: ${to}`,
-      "Content-Type: text/html; charset=utf-8",
-      "MIME-Version: 1.0",
-      `Subject: ${subject}`,
-      "",
-      body,
-    ].join("\n");
-  }
-
-  const encodedMessage = Buffer.from(rawMessage)
-    .toString("base64")
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=+$/, "");
-
-  await gmail.users.messages.send({
-    userId: "me",
-    requestBody: { raw: encodedMessage },
+  await transporter.sendMail({
+    from: process.env.GMAIL_USER,
+    to,
+    subject,
+    html: body,
+    ...(attachment && {
+      attachments: [
+        {
+          filename: attachment.filename,
+          content: attachment.data,
+          contentType: attachment.mimeType,
+        },
+      ],
+    }),
   });
 }

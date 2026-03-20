@@ -1,0 +1,10 @@
+{
+  "buildCommand": "BASE_PATH=/ pnpm --filter @workspace/health-crew-provider run build",
+  "outputDirectory": "artifacts/health-crew-provider/dist/public",
+  "framework": null,
+  "functions": {
+    "api/contact.ts": {
+      "maxDuration": 30
+    }
+  }
+}
